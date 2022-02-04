@@ -1,6 +1,7 @@
 package com.main;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 import com.main.model.Student;
@@ -68,6 +69,16 @@ public class App {
 				System.out.println("Student Info Updated...");
 				break;
 			case 4:
+				System.out.println("All Student Records");
+				System.out.println("**********************************************");
+				System.out.println("ID\tNAME\t\tCITY\tAGE\tDEPT_ID");
+				System.out.println("-----------------------------------------------");
+				List<Student> list= db.fetchAllStudents();
+				for(Student stud : list) {
+					System.out.println(stud.getId() + "\t" + stud.getName() + "\t" 
+							+ stud.getCity() + "   " + stud.getAge() + "\t" + stud.getDepartmentId());
+				}
+				System.out.println("**********************************************");
 				break;
 			default:
 				

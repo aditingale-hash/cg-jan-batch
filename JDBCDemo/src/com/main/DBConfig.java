@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.main.model.Student;
 
@@ -142,13 +144,47 @@ public class DBConfig {
 		dbClose();
 		
 	}
+
+	public List<Student> fetchAllStudents() {
+		dbConnect();
+		String sql="select * from student";
+		List<Student> list = new ArrayList<>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rst=pstmt.executeQuery();
+			while(rst.next()) {
+				int id = rst.getInt("id");
+				String name = rst.getString("name");
+				String city = rst.getString("city");
+				int age = rst.getInt("age");
+				int dept_id = rst.getInt("dept_id");
+				
+				Student s = new Student(); //200X
+				s.setId(id);
+				s.setName(name);
+				s.setCity(city);
+				s.setAge(age);
+				s.setDepartmentId(dept_id);
+				
+				list.add(s); //100X 200X
+			}			
+		} catch (SQLException e) {
+			System.out.println("SQL Issue");
+			e.printStackTrace();
+		}
+		dbClose();
+		return list;
+	}
 }
 /*
  ResultSet rst=
  * +----+------------------+----------+------+---------+
 | id | name             | city     | age  | dept_id |
 +----+------------------+----------+------+---------+
-|  1 | harry potter     | hogwards |   18 |       2 |
+|  1 | harry potter     | hogwards |   18 |       2 | 
+|  2 | ronald weasley   | hogwards |   17 |       2 |rst
+|  4 | hermione granger | hogwards |   18 |       2 |
+|  5 | peter parker     | new york |   32 |       1 |
 ==> convert ==> Student Object()
 
 rst.next() -> true
