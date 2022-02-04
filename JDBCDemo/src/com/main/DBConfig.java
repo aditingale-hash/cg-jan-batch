@@ -3,6 +3,7 @@ package com.main;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.main.model.Student;
@@ -23,7 +24,7 @@ public class DBConfig {
 		//Load the Driver
 		try {
 			Class.forName(driver);
-			System.out.println("driver loaded");
+			//System.out.println("driver loaded");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver loading issue..");
 			e.printStackTrace();
@@ -31,7 +32,7 @@ public class DBConfig {
 		//establish the connection 
 		try {
 			conn = DriverManager.getConnection(url, userDB, passDB);
-			System.out.println("conn made " + conn);
+			//System.out.println("conn made " + conn);
 		} catch (SQLException e) {
 			System.out.println("DB Connection Issue..");
 			e.printStackTrace();
@@ -41,7 +42,7 @@ public class DBConfig {
 	public void dbClose() {
 		try {
 			conn.close();
-			System.out.println("conn closed");
+			//System.out.println("conn closed");
 		} catch (SQLException e) {
 			System.out.println("DB Close Issue...");
 			e.printStackTrace();
@@ -89,8 +90,49 @@ public class DBConfig {
 		dbClose();
 		
 	}
-}
 
+	public Student fetchStudentById(int id) {
+		dbConnect();
+		String sql="select * from student where id=?";
+		Student s = new Student();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			
+			ResultSet rst = pstmt.executeQuery();
+			
+			while(rst.next()) {
+				String name = rst.getString("name");
+				String city = rst.getString("city");
+				int age = rst.getInt("age");
+				int dept_id = rst.getInt("dept_id");
+				
+				s.setId(id);
+				s.setName(name);
+				s.setCity(city);
+				s.setAge(age);
+				s.setDepartmentId(dept_id);
+				
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL Issue");
+			e.printStackTrace();
+		}
+		dbClose();
+		return s;
+		
+	}
+}
+/*
+ ResultSet rst=
+ * +----+------------------+----------+------+---------+
+| id | name             | city     | age  | dept_id |
++----+------------------+----------+------+---------+
+|  1 | harry potter     | hogwards |   18 |       2 |
+==> convert ==> Student Object()
+
+rst.next() -> true
+ */
 
 
 

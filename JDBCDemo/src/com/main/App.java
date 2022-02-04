@@ -47,6 +47,14 @@ public class App {
 				System.out.println("Student Record Deleted...");
 				break;
 			case 3:
+				System.out.println("Update Operation");
+				System.out.println("Enter the ID of student to update");
+				id = sc.nextInt();
+				Student student = db.fetchStudentById(id);
+				System.out.println("Existing details for student with ID "+ id + " are:");
+				System.out.println(student.getName() + "   " + student.getCity() + "   " 
+								   + student.getAge() + "  " + student.getDepartmentId());
+				
 				break;
 			case 4:
 				break;
