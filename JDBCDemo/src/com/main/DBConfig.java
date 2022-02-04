@@ -122,6 +122,26 @@ public class DBConfig {
 		return s;
 		
 	}
+
+	public void updateStudent(Student s, int id) {
+		dbConnect();
+		String sql="update student SET name=?,city=?,age=?,dept_id=? where id=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, s.getName());
+			pstmt.setString(2, s.getCity());
+			pstmt.setInt(3, s.getAge());
+			pstmt.setInt(4, s.getDepartmentId());
+			pstmt.setInt(5, id);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL Issue");
+			e.printStackTrace();
+		}
+		dbClose();
+		
+	}
 }
 /*
  ResultSet rst=

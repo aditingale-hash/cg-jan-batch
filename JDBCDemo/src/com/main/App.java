@@ -10,7 +10,7 @@ public class App {
 		DBConfig db = new DBConfig();
 		Scanner sc = new Scanner(System.in);  
 		System.out.println("Welcome to the Project");
-		
+		Student s=new Student();
 		while(true){
 			System.out.println("****MENU******");
 			System.out.println("Press 1. for insertion");
@@ -26,7 +26,7 @@ public class App {
 			}	
 			switch(input) {
 			case 1:
-				Student s=new Student();
+				
 				System.out.println("Enter Student Details");
 				System.out.println("Enter student name");
 				s.setName(sc.next()); //take input and save it in object
@@ -54,7 +54,18 @@ public class App {
 				System.out.println("Existing details for student with ID "+ id + " are:");
 				System.out.println(student.getName() + "   " + student.getCity() + "   " 
 								   + student.getAge() + "  " + student.getDepartmentId());
-				
+				System.out.println("Please provide new details to update");
+				System.out.println("Enter Student Details");
+				System.out.println("Enter student name");
+				s.setName(sc.next()); //take input and save it in object
+				System.out.println("Enter city");
+				s.setCity(sc.next());
+				System.out.println("Enter Age");
+				s.setAge(sc.nextInt());
+				System.out.println("Enter Department ID");
+				s.setDepartmentId(sc.nextInt());
+				db.updateStudent(s,id);
+				System.out.println("Student Info Updated...");
 				break;
 			case 4:
 				break;
