@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.main.model.Student;
+import com.main.service.StudentService;
 
 public class App {
 	public static void main(String[] args) {
@@ -12,14 +13,15 @@ public class App {
 		Scanner sc = new Scanner(System.in);  
 		System.out.println("Welcome to the Project");
 		Student s=new Student();
+		StudentService studentService = new StudentService();
 		while(true){
-			System.out.println("****MENU******");
+			System.out.println("****MAIN MENU******");
 			System.out.println("Press 1. for insertion");
 			System.out.println("Press 2. for deletion");
 			System.out.println("Press 3. for updation");
 			System.out.println("Press 4. for fetching the data");
 			System.out.println("Press 0. to exit");
-			System.out.println("*************");
+			System.out.println("*******************");
 			int input = sc.nextInt();
 			if(input == 0) { //termination condition- to come out of while
 				System.out.println("Exiting... Bye!!");
@@ -79,7 +81,38 @@ public class App {
 							+ stud.getCity() + "   " + stud.getAge() + "\t" + stud.getDepartmentId());
 				}
 				System.out.println("**********************************************");
-				break;
+				while(true) {
+					System.out.println("****Operations Menu****");
+					System.out.println("Press 1 to sort the records as per age");
+					System.out.println("Press 2 to group the records as per city");
+					System.out.println("Press 3 to group the records as per departmentId");
+					System.out.println("Press 11 to go back to main menu");
+					int opInput = sc.nextInt();
+					if(opInput == 11) {
+						break;
+					}
+					switch(opInput) {
+						case 1:
+							System.out.println("*******Sorted List as per Age*****");
+							System.out.println("ID\tNAME\t\tCITY\tAGE\tDEPT_ID");
+							System.out.println("-----------------------------------------------");
+							List<Student> sortedList = studentService.sortByAge(list);
+							for(Student stud : sortedList) {
+								System.out.println(stud.getId() + "\t" + stud.getName() + "\t" 
+										+ stud.getCity() + "   " + stud.getAge() + "\t" + stud.getDepartmentId());
+							}
+							System.out.println("**********************************************");
+							break;
+						case 2:
+							break;
+						case 3:
+							break;
+						default:
+							
+					}
+					
+				}
+ 				break;
 			default:
 				
 			}
