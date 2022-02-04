@@ -72,6 +72,23 @@ public class DBConfig {
 		
 		dbClose();
 	}
+
+	public void deleteStudent(int id) {
+		dbConnect();
+		String sql="delete from student where id=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("SQL Issue");
+			e.printStackTrace();
+		}
+		dbClose();
+		
+	}
 }
 
 
