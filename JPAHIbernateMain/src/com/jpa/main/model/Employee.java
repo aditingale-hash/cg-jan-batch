@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
  
 
@@ -23,7 +24,10 @@ public class Employee {
 	private double salary;
 	
 	private String city;
-
+	 
+	@OneToOne
+	private Department department;
+	
 	public Employee(Integer id, String name, double salary, String city) {
 		super();
 		this.id = id;
@@ -69,6 +73,16 @@ public class Employee {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+
+	public Department getDepartment() {
+		return department;
+	}
+
+
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
 }

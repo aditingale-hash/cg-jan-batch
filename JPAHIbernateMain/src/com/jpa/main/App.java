@@ -32,11 +32,13 @@ public class App {
 			
 			transaction.begin();
 			Scanner sc = new Scanner(System.in);
-			EmployeeService employeeService = new EmployeeService();
+			EmployeeService employeeService = new EmployeeService(entityManager);
 			while(true) {
 				System.out.println("----Employee Operations----");
 				System.out.println("1. Insert employee");
 				System.out.println("2. Fetch all employees");
+				System.out.println("3. Update Employee");
+				System.out.println("4. Delete Employee");
 				System.out.println("0. exit");
 				int input = sc.nextInt();
 				if(input == 0)
@@ -50,7 +52,7 @@ public class App {
 					System.out.println("Employee inserted in DB.");
 					break;
 				case 2:
-					List<Employee> list = employeeService.fetchAllEmployees(entityManager);
+					List<Employee> list = employeeService.fetchAllEmployees();
 					System.out.println("------ All Employee Details ----\n");
 					for(Employee e: list) {
 						System.out.print("Emplyee ID: " + e.getId());
@@ -60,6 +62,25 @@ public class App {
 						System.out.println();
 					}
 					break;
+				case 3:
+					System.out.println("Enter ID of employee you want to update:");
+					int eid = sc.nextInt();
+					Employee e = employeeService.getEmployeeById(eid);
+					if(e == null)
+						throw new RuntimeException("Invalid ID");
+					
+					e =employeeService.readEmployeeInput(e);
+					employeeService.updateEmployee(e);
+					System.out.println("Employee Info updated...");
+					break;
+				case 4:
+					System.out.println("Enter ID of employee you want to delete:");
+					eid = sc.nextInt();
+					e = employeeService.getEmployeeById(eid);
+					if(e == null)
+						throw new RuntimeException("Invalid ID");
+					employeeService.deleteEmployee(e);
+					System.out.println("Employee deleted from DB...");
 				default:
 					break;
 				}
