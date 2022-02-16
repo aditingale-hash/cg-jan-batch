@@ -32,6 +32,13 @@ public class Employee {
 		this.city = city;
 	}
 
+	
+	public Employee() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public Integer getId() {
 		return id;
 	}
