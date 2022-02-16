@@ -24,6 +24,9 @@ public class App {
 		list.add(1.0);
 		list.add("abc");
 		
+		list.stream().forEach(e-> {
+			 
+		});
 		System.out.println(list);
 		
 		List<Integer> lst = new ArrayList<>(); //generic Implementation 

@@ -1,7 +1,9 @@
 package com.main;
 
-import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.main.model.Student;
@@ -104,6 +106,14 @@ public class App {
 							System.out.println("**********************************************");
 							break;
 						case 2:
+							System.out.println("******Number of Students per city******");
+							System.out.println("City\t\tNumber of Students");
+							System.out.println("----------------------------");
+							LinkedHashMap<String,Integer> map =db.fetchStudentsGroupByCity();
+							for( Map.Entry<String, Integer> entry : map.entrySet()) {
+								System.out.println(entry.getKey() + "                    " + entry.getValue());
+							}
+							System.out.println("----------------------------");
 							break;
 						case 3:
 							break;

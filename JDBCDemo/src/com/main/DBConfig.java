@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.main.model.Student;
@@ -175,6 +177,27 @@ public class DBConfig {
 		dbClose();
 		return list;
 	}
+
+	public LinkedHashMap<String, Integer> fetchStudentsGroupByCity() {
+		dbConnect();
+		String sql="select city,count(id) as cnt from student group by city order by cnt DESC";
+		LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rst = pstmt.executeQuery();
+			
+			while(rst.next()) {
+				String city = rst.getString(1);
+				int count = rst.getInt(2);
+				map.put(city, count);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL Issue");
+			e.printStackTrace();
+		}
+		dbClose();
+		return map;
+	}
 }
 /*
  ResultSet rst=
@@ -188,6 +211,15 @@ public class DBConfig {
 ==> convert ==> Student Object()
 
 rst.next() -> true
+rst= 
++----------+----------------+
+| city     | no_of_students |
++----------+----------------+
+| hogwards |              3 |
+| london   |              2 |
+| mordor   |              2 |
+| new york |              1 |
++----------+----------------+
  */
 
 
