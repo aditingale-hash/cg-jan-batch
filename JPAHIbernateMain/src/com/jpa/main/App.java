@@ -51,7 +51,7 @@ public class App {
 				System.out.println("8. Assign project to employee");
 				System.out.println("9. Project Information");
 				System.out.println("10. Employee Information");
-				
+				System.out.println("11. Employee Stats by city");
 				System.out.println("0. exit");
 				int input = sc.nextInt();
 				if(input == 0) {
