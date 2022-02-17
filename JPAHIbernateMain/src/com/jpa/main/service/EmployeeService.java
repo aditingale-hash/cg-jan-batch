@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import javax.persistence.EntityManager;
 
+import com.jpa.main.model.Department;
 import com.jpa.main.model.Employee;
 
 public class EmployeeService {
@@ -30,6 +31,10 @@ public class EmployeeService {
 		String city = sc.next();
 		employee.setCity(city);
 
+		System.out.println("Enter Department ID: ");
+		int deptId = sc.nextInt();
+		Department d = entityManager.find(Department.class, deptId);
+		employee.setDepartment(d);
 		return employee;
 	}
 

@@ -9,6 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import com.jpa.main.model.Employee;
+import com.jpa.main.service.DepartmentService;
 import com.jpa.main.service.EmployeeService;
 
 public class App {
@@ -33,12 +34,15 @@ public class App {
 			transaction.begin();
 			Scanner sc = new Scanner(System.in);
 			EmployeeService employeeService = new EmployeeService(entityManager);
+			DepartmentService departmentService = new DepartmentService(entityManager);
+			
 			while(true) {
 				System.out.println("----Employee Operations----");
 				System.out.println("1. Insert employee");
 				System.out.println("2. Fetch all employees");
 				System.out.println("3. Update Employee");
 				System.out.println("4. Delete Employee");
+				System.out.println("5. Set Up/Populate Department"); 
 				System.out.println("0. exit");
 				int input = sc.nextInt();
 				if(input == 0)
@@ -59,6 +63,7 @@ public class App {
 						System.out.print(" ||  Emplyee Name: " + e.getName());
 						System.out.print(" ||  Emplyee Salary: " +e.getSalary());
 						System.out.print(" ||  Emplyee City: " + e.getCity());
+						System.out.print(" ||  Department Name: " + e.getDepartment().getName());
 						System.out.println();
 					}
 					break;
@@ -81,6 +86,10 @@ public class App {
 						throw new RuntimeException("Invalid ID");
 					employeeService.deleteEmployee(e);
 					System.out.println("Employee deleted from DB...");
+				case 5: 
+					departmentService.populate();
+					System.out.println("departments added..");
+					break;
 				default:
 					break;
 				}
