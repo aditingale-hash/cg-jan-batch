@@ -11,6 +11,7 @@ import javax.persistence.Persistence;
 import com.jpa.main.model.Employee;
 import com.jpa.main.service.DepartmentService;
 import com.jpa.main.service.EmployeeService;
+import com.jpa.main.service.ProjectService;
 
 public class App {
 	public static void main(String[] args) {
@@ -31,29 +32,34 @@ public class App {
 			entityManager = entityFactory.createEntityManager();
 			transaction = entityManager.getTransaction();
 			
-			transaction.begin();
+			
 			Scanner sc = new Scanner(System.in);
 			EmployeeService employeeService = new EmployeeService(entityManager);
 			DepartmentService departmentService = new DepartmentService(entityManager);
-			
+			ProjectService projectService = new ProjectService(entityManager);
 			while(true) {
+				transaction.begin();
 				System.out.println("----Employee Operations----");
 				System.out.println("1. Insert employee");
 				System.out.println("2. Fetch all employees");
 				System.out.println("3. Update Employee");
 				System.out.println("4. Delete Employee");
-				System.out.println("5. Set Up/Populate Department"); 
+				System.out.println("5. Set Up/Populate Department");
+				System.out.println("6. Employees by Department");
+				System.out.println("7. Set Up/Populate Project");
 				System.out.println("0. exit");
 				int input = sc.nextInt();
-				if(input == 0)
+				if(input == 0) {
+					transaction.commit();
 					break;
-				
+				}
 				switch(input) {
 				case 1: 
 					Employee employee = new Employee();
 					employee = employeeService.readEmployeeInput(employee);
 					entityManager.persist(employee);
 					System.out.println("Employee inserted in DB.");
+					transaction.commit();
 					break;
 				case 2:
 					List<Employee> list = employeeService.fetchAllEmployees();
@@ -66,6 +72,7 @@ public class App {
 						System.out.print(" ||  Department Name: " + e.getDepartment().getName());
 						System.out.println();
 					}
+					transaction.commit();
 					break;
 				case 3:
 					System.out.println("Enter ID of employee you want to update:");
@@ -77,6 +84,7 @@ public class App {
 					e =employeeService.readEmployeeInput(e);
 					employeeService.updateEmployee(e);
 					System.out.println("Employee Info updated...");
+					transaction.commit();
 					break;
 				case 4:
 					System.out.println("Enter ID of employee you want to delete:");
@@ -86,20 +94,41 @@ public class App {
 						throw new RuntimeException("Invalid ID");
 					employeeService.deleteEmployee(e);
 					System.out.println("Employee deleted from DB...");
+					transaction.commit();
+					break;
 				case 5: 
 					departmentService.populate();
 					System.out.println("departments added..");
+					transaction.commit();
+					break;
+				case 6:
+					System.out.println("Enter department ID:");
+					int did=sc.nextInt();
+					list =departmentService.fetchEmployeeByDepartment(did);
+					System.out.println("------ All Employee Details ----\n");
+					for(Employee emp: list) {
+						System.out.print("Emplyee ID: " + emp.getId());
+						System.out.print(" ||  Emplyee Name: " + emp.getName());
+						System.out.print(" ||  Emplyee Salary: " +emp.getSalary());
+						System.out.print(" ||  Emplyee City: " + emp.getCity());
+						System.out.print(" ||  Department Name: " + emp.getDepartment().getName());
+						System.out.println();
+					}
+					transaction.commit();
+					break;
+					
+				case 7:
+					projectService.populate();
+					System.out.println("projects added..");
+					transaction.commit();
 					break;
 				default:
+					transaction.commit();
 					break;
 				}
+				
 			}
-			
-			
-			
-			transaction.commit();
-			
- 		} catch (Exception e) {
+		} catch (Exception e) {
  			System.out.println(e);
  			transaction.rollback();
 		}
