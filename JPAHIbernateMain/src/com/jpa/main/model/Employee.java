@@ -97,4 +97,15 @@ public class Employee {
 		this.department = department;
 	}
 
+
+	public List<Project> getProject() {
+		return project;
+	}
+
+
+	public void setProject(List<Project> project) {
+		this.project = project;
+	}
+
+	
 }

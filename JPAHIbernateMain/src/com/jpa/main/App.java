@@ -9,6 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import com.jpa.main.model.Employee;
+import com.jpa.main.model.Project;
 import com.jpa.main.service.DepartmentService;
 import com.jpa.main.service.EmployeeService;
 import com.jpa.main.service.ProjectService;
@@ -47,6 +48,10 @@ public class App {
 				System.out.println("5. Set Up/Populate Department");
 				System.out.println("6. Employees by Department");
 				System.out.println("7. Set Up/Populate Project");
+				System.out.println("8. Assign project to employee");
+				System.out.println("9. Project Information");
+				System.out.println("10. Employee Information");
+				
 				System.out.println("0. exit");
 				int input = sc.nextInt();
 				if(input == 0) {
@@ -122,6 +127,46 @@ public class App {
 					System.out.println("projects added..");
 					transaction.commit();
 					break;
+				case 8:
+					System.out.println("Enter Employee ID: ");
+					eid = sc.nextInt();
+					System.out.println("Enter Project ID: ");
+					int pid = sc.nextInt();
+					
+					projectService.assignProjectToEmployee(eid,pid);
+					System.out.println("Employee assigned to project..");
+					transaction.commit();
+					break;
+				case 9:
+					System.out.println("Enter Employee ID: ");
+					eid = sc.nextInt();
+					List<Project> listProj = projectService.fetchProjectByEmployeeId(eid);
+					System.out.println("------List of Projects------");
+					listProj.stream().forEach(p->{
+						System.out.print(" Project Name: " + p.getName());
+						System.out.print(" ||  Project Credits: " +p.getCredits());
+						System.out.println("");
+					});
+					transaction.commit();
+					break;
+				case 10: 
+					System.out.println("Enter Project ID: ");
+					pid = sc.nextInt();
+					
+					//display the list of students working on the project.
+					List<Employee> listEmp =employeeService.fetchEmployeeByProjectId(pid);
+					System.out.println("------ All Employee Details ----\n");
+					listEmp.stream().forEach(emp->{
+						System.out.print("Emplyee ID: " + emp.getId());
+						System.out.print(" ||  Emplyee Name: " + emp.getName());
+						System.out.print(" ||  Emplyee Salary: " +emp.getSalary());
+						System.out.print(" ||  Emplyee City: " + emp.getCity());
+						System.out.print(" ||  Department Name: " + emp.getDepartment().getName());
+						System.out.println();
+					});
+					transaction.commit();
+					break;
+					
 				default:
 					transaction.commit();
 					break;

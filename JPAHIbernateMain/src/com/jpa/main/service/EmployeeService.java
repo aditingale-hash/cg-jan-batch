@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import com.jpa.main.model.Department;
 import com.jpa.main.model.Employee;
@@ -53,6 +54,14 @@ public class EmployeeService {
 
 	public void deleteEmployee(Employee e) {
 		entityManager.remove(e);
+	}
+
+	public List<Employee> fetchEmployeeByProjectId(int pidVal) {
+		Query query = entityManager
+				.createQuery("select e from Employee e join e.project p where p.id=:pid", Employee.class);
+		query.setParameter("pid", pidVal);
+		
+		return query.getResultList();
 	}
 
 }
