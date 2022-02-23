@@ -47,6 +47,19 @@ public class ProjectService {
 		
 		return query.getResultList();
 	}
+
+	public void unassignProjectForEmployee(int eid, int pid) {
+		 //fetch the objects of employee and project. 
+		Employee employeeObj=  entityManager.find(Employee.class, eid);
+		Project projectObj = entityManager.find(Project.class, pid);
+		
+		List<Project> list = employeeObj.getProject();
+		list.remove(projectObj);
+		
+		employeeObj.setProject(list);
+		
+		entityManager.persist(employeeObj);
+	}
  
 
 	

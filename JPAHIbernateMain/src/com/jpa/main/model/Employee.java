@@ -2,6 +2,7 @@ package com.jpa.main.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class Employee {
 	@OneToOne
 	private Department department;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
 			name = "employee_project", 
 			joinColumns = @JoinColumn(name="employee_id"),
