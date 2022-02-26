@@ -1,7 +1,10 @@
 package com.springproject.main.service;
 
+import org.springframework.stereotype.Component;
+
 import com.springproject.main.beans.Customer;
 
+@Component
 public class CustomerService {
 
 	public Customer fetchCustomer(int id) {

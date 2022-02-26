@@ -1,3 +1,4 @@
+<%@page import="com.springproject.main.beans.Employee"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -7,13 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Product</h1>
-U clicked: 
-<% 
-String cname = (String)request.getAttribute("cname"); 
-out.println(cname);
-
+<h4>You entered following Details</h4>
+<%
+Employee employee = (Employee)request.getAttribute("employee");
+out.println(employee);
 %>
-
 </body>
 </html>
