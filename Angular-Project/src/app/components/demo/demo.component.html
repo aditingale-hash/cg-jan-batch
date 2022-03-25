@@ -1,0 +1,35 @@
+<section>
+    <div>
+        <h1>Angular App</h1>
+        <label>Name: </label>
+        {{name}}
+        <br />
+        <label>x+y=</label>
+        {{x+y}}
+
+        <hr />
+        <button (click)='showArrayContent()'>Show Array</button>
+        <br />
+        <div *ngIf='showArry'>
+            {{nums}}
+        </div>
+        <br />
+        <br />
+        <button (click)="showAddressContent()">Address</button>
+        <br />
+        <div *ngIf='showAddress'>
+            103, Suite 3F, Kingston street, Hammersmith
+        </div>
+        <hr />
+        <div style="padding: 20px;">
+            <button (click)='showAllNumbers()' class="btn btn-primary">Show All Numbers</button>
+            <button (click)='showAllEvenNumbers()' class="btn btn-info">Show All Even Numbers</button>
+            <button (click)='showAllOddNumbers()' class="btn btn-secondary">Show All Odd Numbers</button>
+            <br />
+            <br />
+            <span *ngFor='let n of tempArray'>
+                {{n}} &nbsp;&nbsp;
+            </span>
+        </div>
+    </div>
+</section>

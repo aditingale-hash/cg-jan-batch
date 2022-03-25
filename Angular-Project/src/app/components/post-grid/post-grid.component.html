@@ -1,0 +1,87 @@
+<section>
+    <div>
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">UserId</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Body</th>
+                    <th scope="col" style="width: 10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let post of posts'>
+                    <td> {{post.id}}</td>
+                    <td> {{post.userId}}</td>
+                    <td>{{post.title}}</td>
+                    <td>{{post.body}}</td>
+                    <td>
+                        <a (click)='showComment(post.id)' href="Javascript:void(0)" data-bs-toggle="modal" data-bs-target="#commentsModal">
+
+                            <img src="../assets/images/eye.png" style="width: 20%; height: 20%" data-bs-toggle="tooltip" data-bs-placement="top" title="View Comments">
+                        </a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a (click)='showUserDetails(post.id, post.userId)' href="Javascript:void(0)" data-bs-toggle="modal" data-bs-target="#userDetailsModal">
+                            <img src="../assets/images/user.png" style="width: 10%; height: 10%" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                title="View User Details">
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Comments Modal -->
+    <div class="modal fade" id="commentsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> {{postTitle}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-info" role="alert" *ngFor='let comment of commentDataArry'>
+                                {{comment.body}}
+                                <br />
+                                <br /> - {{comment.name}}, {{comment.email}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Details Modal -->
+    <div class="modal fade" id="userDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">User Details (id: {{user?.id}})</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label>Name:</label> {{user?.name}}
+                    <br />
+                    <label>Email:</label> {{user?.email}}
+                    <br />
+                    <label>City:</label> {{user?.address?.city}}
+                    <br />
+                    <label>Contact:</label> {{user?.phone}}
+                    <br />
+                    <label>Company:</label> {{user?.company?.name}}
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
